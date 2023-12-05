@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const payload = await Category.findByPk({ include: [Product] });
+    const payload = await Category.findByPk(req.params.id, { include: [Product] });
     res.status(200).json({ status: "success", payload })
   } catch (err) {
     res.status(500).json({ status: "error", payload: err.message })
@@ -49,7 +49,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     const payload = await Category.destroy({
-      where: [req.params.id]
+      where: { id: req.params.id }
     })
     res.status(200).json({ status: "success", payload })
   } catch (err) {
